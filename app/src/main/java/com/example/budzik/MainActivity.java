@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 //        DatePickerDialog datePickerDialog = new DatePickerDialog(
 //                this,
 //                new DatePickerDialog.OnDateSetListener() {
-//                    @Override
+1//                    @Override
 //                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 //                        // Zapisujemy wybraną datę do zmiennych
 //                        selectedYear = year;
@@ -71,11 +72,9 @@ public class MainActivity extends AppCompatActivity {
     // 2. Metoda otwierająca Zegar
     private void showTimePicker() {
         final Calendar c = Calendar.getInstance();
-        // Pobieramy aktualną datę, żeby ustawić ją jako domyślną w dialogu
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
-
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
 
@@ -87,19 +86,12 @@ public class MainActivity extends AppCompatActivity {
                         // Tutaj mamy już komplet danych: Rok, Miesiąc, Dzień, Godzinę i Minutę
 
                         // Tworzymy obiekt LocalDateTime (miesiąc + 1 dla LocalDate!)
-                        LocalDateTime dateTime = null;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            dateTime = LocalDateTime.of(year, month + 1, day, hourOfDay, minute);
-                        }
+                        LocalDateTime dateTime = LocalDateTime.of(year, month + 1, day, hourOfDay, minute);
 
                         // Formatujemy i wyświetlamy
-                        DateTimeFormatter formatter = null;
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            formatter = DateTimeFormatter.ofPattern("HH:mm");
-                        }
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                            tvSelectedDateTime.setText("Ustawiono na: " + dateTime.format(formatter));
-                        }
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+                        Toast.makeText(MainActivity.this, "Ustawiono budzik na:" +dateTime.format(formatter), Toast.LENGTH_LONG).show();
+//                        tvSelectedDateTime.setText("Umówiono: " + dateTime.format(formatter));
                     }
                 },
                 hour, minute, true // true = format 24h
